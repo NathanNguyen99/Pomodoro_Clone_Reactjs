@@ -12,18 +12,18 @@ const TimerSetting = ({ activeSetting, setActiveSetting,
     useOnClickOutside(ref, () => setActiveSetting(false));
 
     // array
-    const [input1, setInput1] = useState(data.Pomoro);
-    const [input2, setInput2] = useState(data.Short);
-    const [input3, setInput3] = useState(data.Long);
+    const [input1, setInput1] = useState(data.Pomoro/60);
+    const [input2, setInput2] = useState(data.Short/60);
+    const [input3, setInput3] = useState(data.Long/60);
     const [longBreakInput, setLongBreakInput] = useState(longBreakInterval);
     
     const handleSubmit = (e) => {
         e.preventDefault();
         
         setData({
-            Pomoro: input1,
-            Short: input2,
-            Long: input3,
+            Pomoro: input1*60,
+            Short: input2*60,
+            Long: input3*60,
         })
         setLongBreakInterval(longBreakInput);
 

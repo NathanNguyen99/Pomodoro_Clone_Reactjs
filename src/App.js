@@ -15,9 +15,9 @@ function App() {
   const [longBreakInterval, setLongBreakInterval] = useState(2);
   const [countLongBreak, setCountLongBreak] = useState(0);
   const obj = {
-    Pomoro: 3,
-    Short: 2,
-    Long: 4,  
+    Pomoro: 25*60,
+    Short: 5*60,
+    Long: 4*60,  
   };
 
   const [data, setData] = useState(obj)

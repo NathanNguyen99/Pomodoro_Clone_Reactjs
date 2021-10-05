@@ -8,22 +8,17 @@ const useTimer = (count, onFinish) => {
     const [isStart, setIsStart] = useState(true);
 
     useEffect(() => {setCounter((count),
-        //important part
-        [count.listOfObjects] // <= means: run this effect only if any variable
-        // in that array is different from the last run
+        [count.listOfObjects] 
         )
-        // if(autoStart)
-        //     start();
-        // else
-        //     pause();
     }, [count])
 
     useEffect(() => {
         let intervalId;
         // Just given out the timer
         if (isStart) {
-            const secondCounter = (counter) % 60;
-            const minuteCounter = Math.floor((counter % 3600) / 60);
+            // 25
+            const secondCounter = ((counter)) % 60;
+            const minuteCounter = Math.floor(((counter) % 3600) / 60);
 
             const computedSecond =
                 String(secondCounter).length === 1
