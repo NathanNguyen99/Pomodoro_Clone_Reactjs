@@ -1,0 +1,132 @@
+.timeboard {
+    max-width: 480px;
+    margin: auto;
+
+    .timeboard-wrapper {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 20px 0px 30px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: center;
+        
+
+        .timeboard-button-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+
+            // Active button state
+            .active-timeboard-status-button {
+                border: none;
+                margin: 0px;
+                border-radius: 4px;
+
+                font-size: 16px;
+                padding: 2px 12px;
+                height: 28px;
+                cursor: pointer;
+                background: none rgba(0, 0, 0, 0.15);
+                box-shadow: none;
+                color: white !important;
+                opacity: 1;
+                font-weight: bold;
+            }
+
+            // Unactive button state
+            .timeboard-status-button {
+                border: none;
+                color: white !important;
+                margin: 0px;
+                border-radius: 4px;
+                font-size: 16px;
+                padding: 2px 12px;
+                height: 28px;
+                cursor: pointer;
+                background: none;
+                box-shadow: none;
+                font-weight: 300;
+            }
+        }
+
+        .timer {
+            font-size: 120px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: white !important;
+        }
+
+        .start-button-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+
+            .start-button {
+                cursor: pointer;
+                border: none;
+                margin: 20px 0px 0px;
+                padding: 0px 12px;
+                border-radius: 4px;
+                box-shadow: rgba(235, 235, 235, 0.8) 0px 6px 0px;
+                font-size: 22px;
+                height: 55px;
+                color: inherit;
+                font-weight: bold;
+                width: 200px;
+                background-color: white;
+                transition: color 0.5s ease-in-out 0s;
+                &.active {
+                    box-shadow: none;
+                    transform: translateY(6px);
+                }
+            }
+
+            .next-button-wrapper {
+                width: calc((100% - 200px) / 2 + 10%);
+                position: absolute;
+                right: 0px;
+                bottom: -6px;
+                height: 84px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .next-button {
+                    cursor: pointer;
+                    user-select: none;
+                    background: none;
+                    border: none;
+                    width: 28px;
+                    height: 28px;
+                    align-items: center;
+                    justify-content: center;
+                    bottom: 9px;
+                    right: -50px;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: all 0.2s ease-out 0s;
+
+                    &.active {
+                        opacity: 1;
+                        pointer-events: auto;
+                    }
+                }
+            }
+        }
+        
+    }
+
+    .sessionNumber {
+        font-size: 16px;
+        opacity: 0.6;
+        margin-bottom: 4px;
+        color: white !important;
+    }
+
+    .taskName {
+        font-size: 18px;
+        font-weight: 100;
+        color: white;
+        overflow-wrap: break-word;
+    }
+}

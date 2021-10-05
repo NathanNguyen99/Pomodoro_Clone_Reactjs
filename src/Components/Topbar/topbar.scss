@@ -1,0 +1,43 @@
+.Topbar {
+    background-color: inherit;
+    width: 100%;
+    height: 60px;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px;
+    max-width: 620px;
+    margin: auto;
+
+    .left {
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+        }
+    }
+
+    .right {
+        display: flex;
+        align-items: center;
+
+        .report-button, .setting-button, .login-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.9;
+            background: none rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+            margin-left: 10px;
+            font-size: 13px;
+            padding: 8px 12px;
+            min-width: 70px;
+            border: none;
+            color: white !important;
+        }
+    }
+}
