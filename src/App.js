@@ -1,29 +1,30 @@
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Topbar from "./Components/Topbar/Topbar";
-import { useState, useEffect, useRef } from "react";
+import { useState} from "react";
 import './app.scss'
 import TimerSetting from "./Components/TimerSeting/TimerSetting";
 import useTimer from "./Components/hooks/useTimer";
-
-import digitalAlarm from './assets/mixkit-alarm-digital-clock-beep-989.wav'
+import PlaySound from './Components/PlaySound/PlaySound';
+import outDoor from './assets/bbc_outdoor.mp3'
 
 function App() {
-  const [startClicked, setStartClicked] = useState(false);
   const [activeButton, setActiveButton] = useState("Pomodoro");
-
   const [activeSetting, setActiveSetting] = useState(false);
   const [longBreakInterval, setLongBreakInterval] = useState(2);
   const [countLongBreak, setCountLongBreak] = useState(0);
   const obj = {
-    Pomoro: 25*60,
-    Short: 5*60,
-    Long: 4*60,  
+    Pomoro: 2,
+    Short: 10*60,
+    Long: 10*60,
   };
 
   const [data, setData] = useState(obj)
-  
+
   const [autoStart, setAutoStart] = useState(false);
   const [autoStartPromo, setAutoStartPromo] = useState(false);
+
+  const [todos, setTodos] = useState([])
+  const [isChoose, setIsChoose] = useState(0);
 
   const { isActive,
     counter,
@@ -35,67 +36,70 @@ function App() {
     reset, } = useTimer(data.Pomoro, handleTimerFinish);
 
   // Pomo -> Short, after 4 loop Pomo -> Long
-  function handleTimerFinish() {  
-    if (activeButton === "Pomodoro") {
-      if(countLongBreak === longBreakInterval){
+  function handleTimerFinish() {
+    if (activeButton === "Pomodoro") { 
+      //<PlaySound url={outDoor}/>
+      if (countLongBreak == longBreakInterval) {
         setActiveButton("Long Break");
         setCounter(data.Long)
-        if(autoStart)
+        if (autoStart)
           start();
+        return <PlaySound url={outDoor}/>
       }
       else {
         setActiveButton("Short Break");
         setCounter(data.Short)
         console.log('longBreakInterval: ' + longBreakInterval)
-        if(autoStart)
+        if (autoStart)
           start();
-        
+        return <PlaySound url={outDoor}/>
       }
     }
 
     if (activeButton === "Short Break") {
+      updateSessionNum();
       setCountLongBreak(countLongBreak + 1)
-      console.log('countLongBreak: '+countLongBreak)
-      if(countLongBreak === longBreakInterval) {
-        setActiveButton("Long Break");
-        setCounter(data.Long)
-        if(autoStart)
-          start();
-      }
-
-      else {
-        setActiveButton("Pomodoro");
-        setCounter(data.Pomoro)
-        console.log(autoStart)
-        if(autoStartPromo)
-          start();
-      }
+      setActiveButton("Pomodoro");
+      setCounter(data.Pomoro)
+      if (autoStartPromo)
+        start();
     }
+
     if (activeButton === "Long Break") {
+      updateSessionNum();
       setCountLongBreak(0)
       setActiveButton("Pomodoro");
       setCounter(data.Pomoro);
-      if(autoStartPromo)
+      if (autoStartPromo)
         start();
     }
   }
-  // App
-  // activeButton === "Pomodoro"
+
+  const updateSessionNum = () => {
+    let updatedTodos = todos.map(todo => {
+      if (isChoose === todo.id) {
+          todo.sessionNum++;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  }
+  
   return (
     <>
       <div className=
         {"App " + ((activeButton === "Pomodoro") ? "" : ((activeButton === "Short Break") ? "activeShort" : "activeLong"))}
       >
         <Topbar activeSetting={activeSetting} setActiveSetting={setActiveSetting} />
-        <Dashboard activeButton={activeButton} setActiveButton={setActiveButton} data={data}
-          startClicked={startClicked} setStartClicked={setStartClicked} isActive={isActive} counter={counter} setCounter={setCounter} seconds={seconds} minutes={minutes} pause={pause} start={start} reset={reset}
+        <Dashboard todos={todos} setTodos={setTodos} isChoose={isChoose} setIsChoose={setIsChoose} activeButton={activeButton} setActiveButton={setActiveButton} data={data}
+          isActive={isActive} counter={counter} setCounter={setCounter} seconds={seconds} minutes={minutes} pause={pause} start={start} reset={reset}
         />
       </div>
       <div className={activeSetting === true ? "timer-setting-main-active" : "timer-setting-main"}>
         <TimerSetting activeSetting={activeSetting} setActiveSetting={setActiveSetting}
           data={data} setData={setData} minutes={minutes}
           autoStart={autoStart} setAutoStart={setAutoStart} autoStartPromo={autoStartPromo} setAutoStartPromo={setAutoStartPromo}
-          longBreakInterval={longBreakInterval} setLongBreakInterval={setLongBreakInterval}/>
+          longBreakInterval={longBreakInterval} setLongBreakInterval={setLongBreakInterval} />
       </div>
     </>
   );

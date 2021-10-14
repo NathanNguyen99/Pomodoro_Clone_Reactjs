@@ -1,12 +1,12 @@
 import Sound from 'react-sound';
-const PlaySound = ({handleSongFinishedPlaying, url, playSound}) => {
+const PlaySound = ({url}) => {
 
-    return (
+    return (    
         <>
             <Sound
                 url={url}
-                playStatus={playSound ? Sound.status.PLAYING : Sound.status.STOPPED}
-                onFinishedPlaying={handleSongFinishedPlaying}
+                playStatus={Sound.status.PLAYING}
+                playFromPosition={0}
             />
         </>
     )

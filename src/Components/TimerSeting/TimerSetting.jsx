@@ -33,9 +33,9 @@ const TimerSetting = ({ activeSetting, setActiveSetting,
     const handleCancel = (e) => {
         e.preventDefault();
 
-        setInput1(data.Pomoro);
-        setInput2(data.Short);
-        setInput3(data.Long);
+        setInput1(data.Pomoro/60);
+        setInput2(data.Short/60);
+        setInput3(data.Long/60);
         setLongBreakInput(longBreakInterval);
 
         setActiveSetting(!activeSetting)

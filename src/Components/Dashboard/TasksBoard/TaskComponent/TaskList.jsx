@@ -3,20 +3,14 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import Task from "./Task";
 import TaskForm from "./TaskForm";
 
-const TaskList = ({todos, setTodos, content, setContent}) => {
+const TaskList = ({todos, isChoose, setIsChoose, setTodos, content, setContent}) => {
 
     const [taskOpen, setTaskOpen] = useState(false);
-
-    // Run based on index of task
-    const [isChoose, setIsChoose] = useState(0);
 
     const addTodo = todo => {
         if (!todo.text || /^\s*$/.test(todo.text)) {
             return;
         }
-
-        //Missing note
-
         const newTodos = [todo, ...todos];
 
         setTodos(newTodos);
@@ -48,10 +42,8 @@ const TaskList = ({todos, setTodos, content, setContent}) => {
         setTodos(updatedTodos);
     };
 
-
     return (
         <> 
-            
             <Task 
                 todos={todos}  
                 completeTodo={completeTodo}

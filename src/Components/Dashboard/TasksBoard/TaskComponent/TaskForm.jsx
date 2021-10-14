@@ -7,6 +7,7 @@ import useOnClickOutside from "../../../hooks/useOnClickOutside";
 function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setContent, content }) {
     const [input, setInput] = useState(edit ? edit.value : '');
     const [inputNote, setInputNote] = useState(edit ? edit.notevalue : '');
+    const [inputSession, setInputSession] = useState(edit ? edit.sessionvalue : 1);
 
     // Check note state
     const [addNote, setAddNote] = useState(false);
@@ -29,23 +30,46 @@ function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setConten
 
     const handleChangeNote = e => {
         setInputNote(e.target.value);
-        // if(e.target.value !== '')
-        //     setTaskOpen(!taskOpen);
     };
 
     const handleSubmit = e => {
         e.preventDefault();
-        setTaskOpen(!taskOpen)
-        onSubmit({
-            id: Math.floor(Math.random() * 10000),
-            text: input,
-            note: inputNote
-        });
 
-        if (content === '')
+        // Case when this Edit isChoose
+        if(edit) {
+            onSubmit({
+                id: edit.id,
+                text: input,
+                note: inputNote,
+                session: inputSession,
+                isComplete: edit.isComplete,
+            });
+
             setContent(input)
-        setInput('');
+            setTaskOpen(false)
+            setInput('');
+        }
+        else{
+            onSubmit({
+                id: Math.floor(Math.random() * 10000),
+                text: input,
+                note: inputNote,
+                session: inputSession,
+                sessionNum: 0
+            });
+            if (content === '')
+                setContent(input)
+            setTaskOpen(false)
+            setInput('');
+        }
     };
+
+    const handleCancel = () => {
+        setInput(edit ? edit.value : '');
+        setInputNote(edit ? edit.notevalue : '');
+        setInputSession(edit ? edit.sessionvalue : '');
+        setTaskOpen(false);
+    }
 
     return (
         <form onSubmit={handleSubmit} ref={ref} autoComplete="off" className='TodoForm'>
@@ -64,24 +88,18 @@ function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setConten
                         </div>
                         <div className="second-input">
                             <div className="second-input-wrapper">
-                                <span>This is something I don't know</span>
+                                <span>Pomodoro Sessions</span>
                                 <input
 
                                     type='number'
-                                    min='0'
+                                    min='1'
                                     step='1'
-                                    // value={input}
-                                    onChange={handleChange}
-                                    name='text'
+                                    value={inputSession}
+                                    onChange={(e) => setInputSession(e.target.value)}
+                                    name=''
                                     className='time-input'
                                 // ref={inputRef}
                                 />
-                                <button className="increase-button">
-                                    <FaArrowUp />
-                                </button>
-                                <button className="decrease-button">
-                                    <FaArrowDown />
-                                </button>
                             </div>
                         </div>
                         <div className="last-input">
@@ -118,7 +136,7 @@ function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setConten
                             Delete
                         </button>
                         <div className="Button-wrapper">
-                            <button className="CancelButton" onClick={() => (setTaskOpen(!taskOpen))}>
+                            <button className="CancelButton" onClick={handleCancel}>
                                 Cancel
                             </button>
                             <button disabled={!input} className="SubmitButton" onClick={handleSubmit} >
@@ -140,25 +158,18 @@ function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setConten
                             />
                         </div>
                         <div className="second-input">
-                            <div className="second-input-wrapper">
-                                <span>This is something I don't know</span>
+                        <div className="second-input-wrapper">
+                                <span>Pomodoro Sessions</span>
                                 <input
-
                                     type='number'
-                                    min='0'
+                                    min='1'
                                     step='1'
-                                    // value={input}
-                                    onChange={handleChange}
-                                    name='text'
+                                    value={inputSession}
+                                    onChange={(e) => setInputSession(e.target.value)}
+                                    name=''
                                     className='time-input'
                                 // ref={inputRef}
                                 />
-                                <button className="increase-button">
-                                    <FaArrowUp />
-                                </button>
-                                <button className="decrease-button">
-                                    <FaArrowDown />
-                                </button>
                             </div>
                         </div>
                         <div className="last-input">
@@ -183,7 +194,7 @@ function TaskForm({ edit, onSubmit, setTaskOpen, taskOpen, removeTodo, setConten
 
                         </button>
                         <div className="Button-wrapper">
-                            <button className="CancelButton" onClick={() => (setTaskOpen(!taskOpen))}>
+                            <button className="CancelButton" onClick={handleCancel}>
                                 Cancel
                             </button>
                             <button disabled={!input} className="SubmitButton" onClick={handleSubmit} >

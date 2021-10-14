@@ -4,11 +4,10 @@ import { useState, useRef } from 'react';
 import TaskSetting from './TaskSetting';
 import TaskList from './TaskComponent/TaskList';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
-const TaskBoard = ({todos, setTodos, content, setContent}) => {
+const TaskBoard = ({isChoose, setIsChoose, todos,  setTodos, content, setContent}) => {
     const [settingOpen, setSettingOpen] = useState(false)
 
     const ref = useRef()
-
     useOnClickOutside(ref, () => setSettingOpen(false));
 
     return (
@@ -26,7 +25,7 @@ const TaskBoard = ({todos, setTodos, content, setContent}) => {
             </div>
             <div className="justALine" style={{marginTop: "18px"}}></div>
             
-            <TaskList todos={todos} setTodos={setTodos} content={content} setContent={setContent}/>
+            <TaskList isChoose={isChoose} setIsChoose={setIsChoose} todos={todos} setTodos={setTodos} content={content} setContent={setContent}/>
         </div>
     )
 }

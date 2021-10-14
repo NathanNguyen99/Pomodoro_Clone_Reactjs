@@ -16,7 +16,6 @@ const useTimer = (count, onFinish) => {
         let intervalId;
         // Just given out the timer
         if (isStart) {
-            // 25
             const secondCounter = ((counter)) % 60;
             const minuteCounter = Math.floor(((counter) % 3600) / 60);
 
@@ -68,19 +67,16 @@ const useTimer = (count, onFinish) => {
         setIsActive(false);
     }
 
-    // Start function
     function start() {
         setIsActive(true);
     }
 
     function reset() {
-
         setCounter(count);
         setSeconds("00");
         setMinutes("00");
         setIsActive(false);
     }
-
     return {
         isActive,
         counter,
@@ -90,7 +86,6 @@ const useTimer = (count, onFinish) => {
         start,
         reset,
         setCounter,
-        
     };
 };
 
